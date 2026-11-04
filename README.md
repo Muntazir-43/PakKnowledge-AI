@@ -16,6 +16,18 @@ The application retrieves relevant information from a local knowledge base, veri
 - **Abstention handling:** Avoids generating answers when the available evidence is insufficient.
 - **Interactive interface:** Provides a Streamlit-based chatbot interface with theme options and chat functionality.
 
+
+## Application Preview
+
+### Desktop Interface
+
+![PakKnowledge AI Desktop Interface](images/desktop-preview.png)
+
+### Mobile Interface
+
+![PakKnowledge AI Mobile Interface](images/mobile-preview.png)
+
+
 ## 🛠️ Technologies Used
 
 | Technology | Purpose |
@@ -85,6 +97,9 @@ PakKnowledge-AI/
 │   ├── __init__.py
 │   └── search.py
 │
+├── images/
+│   ├── desktop-preview.png
+│   └── mobile-preview.png
 ├── app.py
 ├── graph.py
 ├── llm_client.py
