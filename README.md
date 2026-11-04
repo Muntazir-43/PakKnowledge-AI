@@ -25,7 +25,7 @@ The application retrieves relevant information from a local knowledge base, veri
 
 ### Mobile Interface
 
-### Mobile Interface
+<div align="center">
 
 <table>
   <tr>
@@ -41,6 +41,8 @@ The application retrieves relevant information from a local knowledge base, veri
     </td>
   </tr>
 </table>
+
+</div>
 
 
 ## 🛠️ Technologies Used
