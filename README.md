@@ -25,7 +25,22 @@ The application retrieves relevant information from a local knowledge base, veri
 
 ### Mobile Interface
 
-![PakKnowledge AI Mobile Interface](images/mobile-preview.png)
+### Mobile Interface
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="images/mobile-preview-1.png" width="300" alt="Mobile View 1" />
+      <br />
+      <sub><b>Main Screen</b></sub>
+    </td>
+    <td align="center">
+      <img src="images/mobile-preview-2.png" width="300" alt="Mobile View 2" />
+      <br />
+      <sub><b>Chat View</b></sub>
+    </td>
+  </tr>
+</table>
 
 
 ## 🛠️ Technologies Used
