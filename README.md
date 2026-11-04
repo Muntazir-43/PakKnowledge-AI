@@ -36,19 +36,25 @@ The application retrieves relevant information from a local knowledge base, veri
 PakKnowledge AI follows a Retrieval-Augmented Generation workflow.
 
 ```mermaid
+
 flowchart TD
-    A[User Question] --> B[Question Classification]
-    B --> C{Pakistan Related?}
-    C -->|No| D[Out-of-Scope Response]
-    C -->|Yes| E[Semantic Retrieval]
-    E --> F[ChromaDB]
-    F --> G[Relevant Document Passages]
-    G --> H[Evidence Verification]
-    H --> I{Sufficient Evidence?}
-    I -->|No| J[Abstention Response]
-    I -->|Yes| K[Grounded Answer Generation]
-    K --> L[Source Citations]
-    L --> M[Streamlit Interface]
+    A["User Question"] --> B["Question Classification"]
+    B --> C{"Pakistan Related?"}
+
+    C -->|No| D["Out-of-Scope Response"]
+    C -->|Yes| E["Retrieve Relevant Passages"]
+
+    E --> F{"Sufficient Evidence?"}
+
+    F -->|No| G["Abstain: Insufficient Evidence"]
+    F -->|Yes| H["Generate Grounded Answer"]
+
+    H --> I["Attach Source Citations"]
+
+    D --> J["Display Response"]
+    G --> J
+    I --> J
+
 ```
 
 ### How It Works
