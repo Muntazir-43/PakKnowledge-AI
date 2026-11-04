@@ -106,6 +106,10 @@ PakKnowledge-AI/
 │   ├── uploads/
 │   └── chroma_db/
 │
+├── images/
+│   ├── desktop-preview.png
+│   └── mobile-preview.png
+│
 ├── ingestion/
 │   ├── indexer.py
 │   └── load_documents.py
@@ -114,9 +118,6 @@ PakKnowledge-AI/
 │   ├── __init__.py
 │   └── search.py
 │
-├── images/
-│   ├── desktop-preview.png
-│   └── mobile-preview.png
 ├── app.py
 ├── graph.py
 ├── llm_client.py
