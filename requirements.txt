@@ -1,0 +1,10 @@
+
+streamlit==1.66.1
+chromadb==1.5.9
+langgraph==1.2.18
+openai==3.41.0
+python-dotenv==1.2.4
+beautifulsoup4==4.15.0
+pypdf==6.21.4
+docx2txt==0.9
+requests==2.34.2
