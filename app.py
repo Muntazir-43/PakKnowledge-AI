@@ -1,16 +1,11 @@
 import logging
 from pathlib import Path
 
-import chromadb
 import streamlit as st
 
-from graph import ask_question
-
-
 # ---------------------------------------------------------
-# PAGE CONFIGURATION
+# PAGE CONFIGURATION (Must be the very first Streamlit command)
 # ---------------------------------------------------------
-
 st.set_page_config(
     page_title="PakKnowledge AI",
     page_icon="🇵🇰",
@@ -18,20 +13,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-PROJECT_ROOT = Path(__file__).resolve().parent
-CHROMA_DIR = PROJECT_ROOT / "data" / "chroma_db"
-COLLECTION_NAME = "pakknowledge_documents"
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("pakknowledge")
-
-
-# ---------------------------------------------------------
-# CUSTOM CSS
-# Uses Streamlit theme variables so System, Light, and Dark
-# modes continue to work through Streamlit's Settings menu.
-# ---------------------------------------------------------
-
+# Render UI layout immediately so page renders on cold starts without delay
 st.markdown(
     """
     <style>
@@ -178,6 +160,16 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+# Lazy import core Graph logic after initial page layout setup
+from graph import ask_question
+
+PROJECT_ROOT = Path(__file__).resolve().parent
+CHROMA_DIR = PROJECT_ROOT / "data" / "chroma_db"
+COLLECTION_NAME = "pakknowledge_documents"
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("pakknowledge")
+
 
 # ---------------------------------------------------------
 # SESSION STATE
@@ -188,17 +180,24 @@ if "messages" not in st.session_state:
 
 
 # ---------------------------------------------------------
-# KNOWLEDGE BASE STATUS
+# KNOWLEDGE BASE STATUS (CACHED RESOURCE FOR SPEED)
 # ---------------------------------------------------------
 
-@st.cache_data(ttl=30, show_spinner=False)
+@st.cache_resource(show_spinner=False)
+def get_chroma_client(chroma_path: str):
+    """Lazy-load and cache ChromaDB PersistentClient across sessions."""
+    import chromadb
+    return chromadb.PersistentClient(path=chroma_path)
+
+
+@st.cache_data(ttl=60, show_spinner=False)
 def get_knowledge_base_status() -> tuple[bool, int, str | None]:
     """Return ChromaDB connection status, indexed chunk count, and error."""
     try:
         if not CHROMA_DIR.exists():
             return False, 0, "The ChromaDB directory does not exist."
 
-        client = chromadb.PersistentClient(path=str(CHROMA_DIR))
+        client = get_chroma_client(str(CHROMA_DIR))
         collection = client.get_or_create_collection(
             name=COLLECTION_NAME,
             metadata={"hnsw:space": "cosine"},
@@ -210,7 +209,7 @@ def get_knowledge_base_status() -> tuple[bool, int, str | None]:
 
 
 # ---------------------------------------------------------
-# SOURCE DISPLAY
+# SOURCE DISPLAY HELPERS
 # ---------------------------------------------------------
 
 def render_sources(sources: list[dict]) -> None:
