@@ -22,9 +22,6 @@ __pycache__/
 .coverage
 htmlcov/
 
-# ChromaDB database
-data/chroma_db/
-
 # User-uploaded and private documents
 data/uploads/
 
